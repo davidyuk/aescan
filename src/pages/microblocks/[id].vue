@@ -14,15 +14,15 @@
       {{ microblocksHints.microblock }}
     </template>
   </page-header>
-  <template v-if="!isLoading && isMicroblockFound">
-    <microblock-details-panel
-      v-if="microblockDetails"
-      :microblock-details="microblockDetails"/>
 
+  <loader-panel v-if="isLoading"/>
+
+  <template v-if="isLoaded">
+    <microblock-details-panel :microblock-details="microblockDetails"/>
     <microblock-transactions-panel/>
   </template>
-  <loader-panel v-else-if="isLoading"/>
-  <not-found-panel v-else>
+
+  <not-found-panel v-if="hasError">
     Oops! We are sorry. The microblock identified by
     <q>
       {{ route.params.id }}
@@ -42,13 +42,16 @@ import NotFoundPanel from '@/components/NotFoundPanel'
 import MicroblockDetailsPanel from '@/components/MicroblockDetailsPanel'
 import MicroblockTransactionsPanel from '~/components/MicroblockTransactionsPanel'
 
+const route = useRoute()
 const { isLoading } = useLoading()
+
 const microblockDetailsStore = useMicroblockDetailsStore()
 const { microblockDetails } = storeToRefs(microblockDetailsStore)
 const { fetchMicroblock } = microblockDetailsStore
-const route = useRoute()
 
 const isMicroblockFound = ref(true)
+const isLoaded = computed(() => !isLoading.value && isMicroblockFound.value)
+const hasError = computed(() => !isLoading.value && !isMicroblockFound.value)
 
 const { error } = await useAsyncData(async() => {
   await fetchMicroblock(route.params.id)

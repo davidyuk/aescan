@@ -19,13 +19,15 @@
       </app-link>
     </template>
   </page-header>
-  <template v-if="!isLoading && isContractFound">
+
+  <loader-panel v-if="isLoading"/>
+
+  <template v-if="isLoaded">
     <contract-details-panel
-      v-if="contractDetails"
       class="contract-details__panel"
       :contract-details="contractDetails"/>
 
-    <app-tabs v-if="contractDetails">
+    <app-tabs>
       <app-tab title="Call Transactions">
         <contract-call-transactions-panel/>
       </app-tab>
@@ -34,8 +36,8 @@
       </app-tab>
     </app-tabs>
   </template>
-  <loader-panel v-else-if="isLoading"/>
-  <not-found-panel v-else>
+
+  <not-found-panel v-if="hasError">
     Oops! We are sorry. The Smart Contract identified by
     <q>
       {{ route.params.id }}
@@ -61,12 +63,13 @@ const contractDetailsStore = useContractDetailsStore()
 const { contractDetails } = storeToRefs(contractDetailsStore)
 const { fetchContractDetails, fetchContractEvents } = contractDetailsStore
 const route = useRoute()
-
 const { isLoading } = useLoading()
 
 await useAsyncData(() => fetchContractDetails(route.params.id))
 
 const isContractFound = ref(true)
+const hasError = computed(() => !isLoading.value && !isContractFound.value)
+const isLoaded = computed(() => !isLoading.value && isContractFound.value)
 
 const { error } = await useAsyncData(() => fetchContractDetails(route.params.id))
 
