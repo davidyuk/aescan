@@ -56,7 +56,7 @@ import AppIcon from '@/components/AppIcon'
 import { isDesktop } from '@/utils/screen'
 import NetworkSelect from '@/components/NetworkSelect'
 import { useUiStore } from '@/stores/ui'
-import { NAVIGATION_HASH } from '@/utils/constants'
+import { MENU_HASH } from '@/utils/constants'
 
 const route = useRoute()
 const router = useRouter()
@@ -75,14 +75,14 @@ onBeforeUnmount(() => {
 })
 
 watch(route, () => {
-  if (route.hash !== NAVIGATION_HASH) {
+  if (route.hash !== MENU_HASH) {
     closeNavigation()
   }
 })
 
 function toggleNavigation() {
   if (!isMobileMenuOpen.value && router.options.history.state.back === null) {
-    router.push({ hash: NAVIGATION_HASH })
+    router.push({ hash: MENU_HASH })
   }
 
   isMobileMenuOpen.value = !isMobileMenuOpen.value
