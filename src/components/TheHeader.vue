@@ -56,8 +56,10 @@ import AppIcon from '@/components/AppIcon'
 import { isDesktop } from '@/utils/screen'
 import NetworkSelect from '@/components/NetworkSelect'
 import { useUiStore } from '@/stores/ui'
+import { NAVIGATION_HASH } from '@/utils/constants'
 
 const route = useRoute()
+const router = useRouter()
 const { isNavigationDrawerOpen } = storeToRefs(useUiStore())
 
 onMounted(() => {
@@ -73,10 +75,16 @@ onBeforeUnmount(() => {
 })
 
 watch(route, () => {
-  closeNavigation()
+  if (route.hash !== NAVIGATION_HASH) {
+    closeNavigation()
+  }
 })
 
 function toggleNavigation() {
+  if (!isNavigationDrawerOpen.value && router.options.history.state.back === null) {
+    router.push({ hash: NAVIGATION_HASH })
+  }
+
   isNavigationDrawerOpen.value = !isNavigationDrawerOpen.value
 }
 
