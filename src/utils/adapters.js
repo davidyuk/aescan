@@ -332,6 +332,7 @@ export function adaptContractDetails(
   contractCallsCount,
   contractCreationTx,
   contractType,
+  tokenDetails,
   contractAccountBalance,
 ) {
   return {
@@ -345,6 +346,7 @@ export function adaptContractDetails(
     contractAccountBalance,
     callsCount: contractCallsCount,
     contractType,
+    tokenDetails,
   }
 }
 
@@ -356,6 +358,7 @@ export function adaptContractEvents(events, blockHeight) {
         createdHeight: event.height,
         eventName: event.eventName,
         data: event.args,
+        isDecoded: !!event.eventName,
         callTxHash: event.callTxHash,
       }
     })
@@ -576,10 +579,29 @@ export function adaptNamesResults(names) {
   }
 }
 
+export function adaptNftTransfers(transfers) {
+  const formattedData = transfers.data
+    .map(transfer => {
+      return {
+        txHash: transfer.txHash,
+        time: DateTime.fromMillis(transfer.microTime),
+        height: transfer.blockHeight,
+        tokenId: transfer.tokenId,
+        recipient: transfer.recipient,
+        sender: transfer.sender,
+      }
+    })
+  return {
+    next: transfers.next,
+    data: formattedData,
+    prev: transfers.prev,
+  }
+}
+
 export function adaptNftDetails(nft) {
   return {
     ...nft,
-    tokenLimit: formatTokenLimit(nft.extensions, nft.limits.tokenLimit),
-    templateLimit: formatTemplateLimit(nft.extensions, nft.limits.templateLimit),
+    tokenLimit: formatTokenLimit(nft.extensions, nft.limits?.tokenLimit),
+    templateLimit: formatTemplateLimit(nft.extensions, nft.limits?.templateLimit),
   }
 }
