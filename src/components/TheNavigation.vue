@@ -129,12 +129,6 @@ function updateIsDesktopResolution() {
     }
   }
 
-  &__item {
-    height: 100%;
-    display: flex;
-    align-items: center;
-  }
-
   &__link {
     color: var(--color-midnight);
     display: block;

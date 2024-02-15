@@ -43,8 +43,6 @@
 </template>
 
 <script setup>
-import { isDesktop } from '@/utils/screen'
-
 const route = useRoute()
 
 const isNavigationOpen = ref(false)
