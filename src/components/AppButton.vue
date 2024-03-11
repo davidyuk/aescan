@@ -47,11 +47,6 @@ defineProps({
     type: String,
     default: null,
   },
-  variant: {
-    type: String,
-    default: null,
-    validator: val => ['link'].includes(val),
-  },
   target: {
     type: String,
     default: '_blank',
@@ -130,10 +125,6 @@ defineProps({
     background: transparent;
     text-decoration: none;
     color: var(--color-blue);
-    text-decoration: none;
-    font-weight: 400;
-
-    background: transparent;
     padding: 0;
 
     &:hover {
