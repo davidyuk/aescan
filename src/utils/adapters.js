@@ -380,6 +380,7 @@ export function adaptContractEvents(events) {
         args: event.args,
         isDecoded: !!event.eventName,
         callTxHash: event.callTxHash,
+        logIdx: event.logIdx,
       }
     })
 

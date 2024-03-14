@@ -122,6 +122,7 @@ export const useContractVerifiedStore = defineStore('contractVerified', () => {
     getWriteContractInstance,
     parseArguments,
     parseResponse,
+    aciObject,
     aciReadEntrypoints,
     aciWriteEntrypoints,
     walletSdk,
