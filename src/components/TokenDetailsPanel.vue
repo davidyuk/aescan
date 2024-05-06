@@ -154,7 +154,7 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useMarketStatsStore } from '@/stores/marketStats'
-import { formatAePrice, formatNullable, formatNumber } from '@/utils/format'
+import { formatAePrice, formatNumber } from '@/utils/format'
 import TokenSymbolIcon from '@/components/TokenSymbolIcon'
 import { tokensHints } from '@/utils/hints/tokensHints'
 
@@ -181,12 +181,6 @@ const tokenDexUrl = computed(() =>
 const fiatPrice = computed(() =>
   props.tokenDetails.price && price.value
     ? `$${formatNumber(price.value * props.tokenDetails.price, null, null, 7)}`
-    : '---',
-)
-
-const marketCap = computed(() =>
-  props.tokenDetails.marketCap && price.value
-    ? `$${formatNullable(formatNumber(props.tokenDetails.marketCap * price.value, 0, 2))}`
     : '---',
 )
 </script>

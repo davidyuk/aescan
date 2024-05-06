@@ -188,7 +188,7 @@ const transactionNodeUrl = computed(() => {
 })
 
 const transactionMiddlewareUrl = computed(() => {
-  return `${MIDDLEWARE_URL}/v2/txs/${props.transactionDetails.hash}`
+  return `${MIDDLEWARE_URL}/v3/transactions/${props.transactionDetails.hash}`
 })
 </script>
 
